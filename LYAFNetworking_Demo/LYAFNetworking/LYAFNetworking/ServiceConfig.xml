@@ -1,0 +1,760 @@
+<ServiceMetadata  UseTestEnvironment="true">
+    <!-- 此部分为底层行为设置，请勿修改。如有问题请联系相关负责人。 -->
+    <Config>
+        <Url DateParser="ymdhms" Enum="integer" />
+        <Decoder Name="json" BodyEncoding="utf-8" />
+        <Encoder Name="json" DateParser="ms" BodyEncoding="utf-8" Enum="integer" />
+    </Config>
+    
+    <Defaults
+    IsExclusive="true"
+    CheckNetwork="true"
+    IsLoggingEnabled="true"
+    ShowWaitBox="false"
+    ShowError="true"
+    CheckPayedNetwork="true"
+    Timeout="15"
+    Network="all" />
+    
+    <Urls>
+        <Url Name="DengLuURL"
+        Value="http://www.xingdongjia.cn/xdapi/login/" />
+        <Url Name="XingDongURL"
+        Value="http://www.xingdongjia.cn/xdapi/opreate/" />
+        <Url Name="RenWuURL"
+        Value="http://www.xingdongjia.cn/xdapi/task/" />
+        <Url Name="LianXiURL"
+        Value="http://www.xingdongjia.cn/xdapi/contact/" />
+        <Url Name="FaXianURL"
+        Value="http://www.xingdongjia.cn/xdapi/discovery/" />
+        <Url Name="WoURL"
+        Value="http://www.xingdongjia.cn/xdapi/setup/" />
+        <Url Name="ShangChuanURL"
+        Value="http://www.xingdongjia.cn/" />
+        <Url Name="ZhiFuURL"
+        Value="http://www.xingdongjia.cn/xdapi/pay/" />
+        <Url Name="BiaoQianURL"
+        Value="http://www.xingdongjia.cn/xdapi/acTags/" />
+        <Url Name="JiFenURL"
+        Value="http://www.xingdongjia.cn/xdapi/integralDts/" />
+        <Url Name="BeiZhuURL"
+        Value="http://www.xingdongjia.cn/xdapi/note/" />
+    </Urls>
+    <TestUrls>
+        <Url Name="DengLuURL"
+        Value="http://114.112.98.168:8080/xdapi/login/" />
+        <Url Name="XingDongURL"
+        Value="http://114.112.98.168:8080/xdapi/opreate/" />
+        <Url Name="RenWuURL"
+        Value="http://114.112.98.168:8080/xdapi/task/" />
+        <Url Name="LianXiURL"
+        Value="http://114.112.98.168:8080/xdapi/contact/" />
+        <Url Name="FaXianURL"
+        Value="http://114.112.98.168:8080/xdapi/discovery/" />
+        <Url Name="WoURL"
+        Value="http://114.112.98.168:8080/xdapi/setup/" />
+        <Url Name="ShangChuanURL"
+        Value="http://114.112.98.168:8282/" />
+        <Url Name="ZhiFuURL"
+        Value="http://114.112.98.168:8080/xdapi/pay/" />
+        <Url Name="BiaoQianURL"
+        Value="http://114.112.98.168:8080/xdapi/acTags/" />
+        <Url Name="JiFenURL"
+        Value="http://114.112.98.168:8080/xdapi/integralDts/" />
+        <Url Name="BeiZhuURL"
+        Value="http://114.112.98.168:8080/xdapi/note/" />
+    </TestUrls>
+    
+    <ServiceMethods>
+        <!-- 登录 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="POST"
+        Name="DL_login.action"
+        Parameters="~"
+        Url="[DengLuURL]login.action"
+        ShowWaitBox="true"/>
+        
+        <!-- 获取验证码 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET "
+        Name="DL_getRegistryCode.action"
+        Parameters="userCellphone,regCodeType"
+        Url="[DengLuURL]getRegistryCode.action"
+        ShowError="true"/>
+        
+        <!-- 手机号是否注册 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET "
+        Name="DL_validateCellphone.action"
+        Parameters="userCellphone"
+        Url="[DengLuURL]validateCellphone.action" />
+        
+        <!-- 找回/重置密码 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="DL_resetPassword.action"
+        Parameters="userCellphone,loginPassword"
+        Url="[DengLuURL]retrievePwd.action" />
+        
+        <!-- 1.1.4验证验证码 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="DL_validateRegistryCode.action"
+        Parameters="userCellphone,registerCode"
+        Url="[DengLuURL]validateRegistryCode.action" />
+        
+        <!-- 1.1.5注销登录 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="DL_logout.action"
+        Parameters="*******"
+        Url="[DengLuURL]validateRegistryCode.action" />
+        
+        <!-- 1.1.6注册 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="POST"
+        Name="DL_register.action"
+        Parameters="/~"
+        Url="[DengLuURL]register.action" />
+        
+        <!-- 1.2.1 最近行动数据展示 -->
+        <ServiceMethod
+        ModelClass="YKXingDongOneDaySM"
+        IsExclusive="false"
+        Method="GET"
+        Name="XD_main.action"
+        Parameters="actionOpreateUserAccount,actionTipTimeString"
+        Url="[XingDongURL]main.action"
+        ShowError="false"/>
+        
+        <!-- 1.2.1 最近行动数据展示 承载页-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="XD_getActionByDateTime.action"
+        Parameters="actionOpreateUserAccount,actionTipTimeString"
+        Url="[XingDongURL]getActionByDateTime.action"
+        ShowError="false"/>
+        
+        
+        <!-- 1.2.1 最近行动数据展示 分页 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="XD_main.action2"
+        Parameters="actionOpreateUserAccount,actionTipTimeString,pageIndex,pageSize"
+        Url="[XingDongURL]main.action" />
+        
+        <!-- 1.2.2 查看行动详情 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="XD_viewAction.action"
+        Parameters="actionId"
+        Url="[XingDongURL]viewAction2.action" />
+        
+        <!-- 1.2.3 行动处理 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="XD_processAction.action"
+        Parameters="actionId,actionOpreateUserAccount,actionTipTime,actionCloseType,actionCloseName,todayTipTime,actionRepeatId,processStatus,tag,tagtype,type,tDesc"
+        Url="[XingDongURL]processAction2.action" />
+        
+        <!-- 1.2.4 添加行动 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="XD_addAction.action"
+        Parameters="actionOpreateUserAccount,actionCustomerId,actionPlanName,actionPlanType,isRepeat,actionTipTime,actionProp"
+        Url="[XingDongURL]addAction.action" />
+        
+        <!-- 1.2.4 添加行动 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="XD_addActionByTags.action"
+        Parameters="actionOpreateUserAccount,actionCustomerId,actionPlanName,actionPlanType,isRepeat,actionTipTime,actionProp"
+        Url="[XingDongURL]addActionByTags.action" />
+        
+        
+        <!-- 1.2.5 任务列表 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="getTaskList"
+        Parameters="userAccount"
+        Url="[RenWuURL]getTaskInfo.action" />
+        
+        <!-- 1.2.6 行动搜索 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="XD_searchAction.action"
+        Parameters="**********"
+        Url="[XingDongURL]searchAction.action" />
+        
+        <!-- 1.2.7 删除行动 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="XD_deleteAction.action"
+        Parameters="actionIds"
+        Url="[XingDongURL]removeAction.action" />
+        
+        <!-- 1.2.8 获取最近三天行动状态 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="XD_getLatelyActionStatus.action"
+        Parameters="actionOpreateUserAccount"
+        Url="[XingDongURL]getLatelyActionStatus.action"
+        ShowError="false"/>
+        
+        <!-- 1.2.9 行动提醒 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="XD_********"
+        Parameters="********"
+        Url="[XingDongURL]********" />
+        
+        <!-- 1.3.1 客户搜索 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="main.action"
+        Parameters="********"
+        Url="[LianXiURL]main.action" />
+        
+        <!-- 1.3.2 标记客户 -->
+        <ServiceMethod
+        IsExclusive="true"
+        Method="GET"
+        Name="LX_markCustomer.action"
+        Parameters="userAccount,customerId,custLevel"
+        Url="[LianXiURL]markCustomer.action" />
+        
+        <!-- 1.3.3 删除客户 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="LX_deleteCustomer.action"
+        Parameters="userAccount,customerId"
+        Url="[LianXiURL]deleteCustomerById.action" />
+        
+        <!-- 1.3.4 添加客户 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="POST"
+        Name="LX_addCustomerByUser.action"
+        Parameters="/~"
+        Url="[LianXiURL]addCustomerByUser.action" />
+        
+        <!-- 1.3.5 获取客户列表 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="LX_queryCustomerByUser.action"
+        Parameters="userAccount,custLevel"
+        Url="[LianXiURL]queryCustomerByUser.action" />
+        
+        <!-- 1.3.6 修改客户详细资料 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="POST"
+        Name="LX_updateCustomer.action"
+        Parameters="/~"
+        Url="[LianXiURL]updateCustomer.action" />
+        
+        <!-- 1.3.6 获取客户详情 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="LX_queryCustomerById.action"
+        Parameters="userAccount,customerId"
+        Url="[LianXiURL]queryCustomerById.action" />
+        
+        <!-- 1.3.8 获取跟客户有关的行动-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="LX_queryByCustomerId.action"
+        Parameters="actionOpreateUserAccount,actionCustomerId"
+        Url="[XingDongURL]queryByCustomerId.action" />
+        
+        <!-- 1.3.9 共享联系人-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="LX_shareCustomer.action"
+        Parameters="customerId,userAccount"
+        Url="[LianXiURL]shareCustomers.action" />
+        
+        
+        
+        <!-- 1.4.1 发现信息更新提醒 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="FX_countClue.action"
+        Parameters="userAccount"
+        Url="[FaXianURL]countClue.action" />
+        
+        <!-- 1.4.2 查看我的线索 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="FX_queryClubByUser.action"
+        Parameters="userAccount,isOld,pageIndex"
+        Url="[FaXianURL]queryClubByUser.action" />
+        
+        <!-- 1.4.3 查看我的推荐 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="FX_queryReByUser.action"
+        Parameters="userAccount"
+        Url="[FaXianURL]queryReByUser.action" />
+        
+        <!-- 1.4.4查看我的积分&&礼券 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="FX_queryNormalGiftAndIntegralDtsByUser.action"
+        Parameters="userAccount"
+        Url="[FaXianURL]queryNormalGiftAndIntegralDtsByUser.action" />
+        
+        
+        <!-- 1.4.4查看我的礼券 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="FX_queryGiftByUser.action"
+        Parameters="userAccount"
+        Url="[FaXianURL]queryGiftByUser.action" />
+        
+        <!--  删除线索 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="deleteClue"
+        Parameters="userAccount,clueString"
+        Url="[FaXianURL]deleteClue.action" />
+        
+        <!-- 1.4.5 购买线索 积分-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="FX_buyClueNew.action"
+        Parameters="userAccount,clueString,releString"
+        Url="[FaXianURL]buyClueNew.action" />
+        
+        <!-- 1.4.5 购买线索 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="buyClue.action"
+        Parameters="userAccount,allMoney,allGift,releString,clueString"
+        Url="[FaXianURL]buyClue.action" />
+        
+        <!-- 1.4.6 查看线索详情 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="FX_queryClubById.action"
+        Parameters="userAccount,clueId"
+        Url="[FaXianURL]queryClubById.action" />
+        
+        <!-- 1.4.7 跟进,打电话，约见面，发邮件 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="followClue.action"
+        Parameters="userAccount,clueId,type"
+        Url="[FaXianURL]followClue.action" />
+        
+        <!-- 线索标记 没意见 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="updateHistory"
+        Parameters="userAccount,clueId"
+        Url="[FaXianURL]updateHistory.action" />
+        
+        <!-- 资料错误 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="clubError.action"
+        Parameters="clueComment.commUserAccount,clueComment.clueId,clueComment.commType,clueComment.commContent"
+        Url="[FaXianURL]clubError.action" />
+        
+        <!-- 1.4.8 名录 按照公司地址坐标查询-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="LY_queryClueByComLocation.action"
+        Timeout="20"
+        Parameters="userAccount,longitude,latitude,currLongitude,currLatitude,pageIndex,pageSize"
+        Url="[FaXianURL]queryClueByComLocation.action" />
+        
+        <!-- 1.4.8 名录 按照公司地址名称查询-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="LY_queryClueByComAddName.action"
+        Timeout="20"
+        Parameters="userAccount,comAddress,longitude,latitude,pageIndex,pageSize"
+        Url="[FaXianURL]queryClueByAddress.action" />
+        
+        
+        <!-- 1.4.8 名录 按照公司名称查询-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="LY_queryClueByComName.action"
+        Timeout="20"
+        Parameters="userAccount,longitude,latitude,clueEntryComName,pageIndex,pageSize"
+        Url="[FaXianURL]queryClueByComName.action" />
+        
+        <!-- 1.4.8 名录 -->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="queryClue.action"
+        Parameters="userAccount,longitude,latitude,pageIndex,pageSize"
+        Url="[FaXianURL]queryClue.action" />
+        
+        
+        <!--我的模块-->
+        
+        <!--        1.5.0绑定企业-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="bindCompany2"
+        Parameters="bindApply.applyUserAccount"
+        Url="[WoURL]queryBindCompany.action"
+        ShowWaitBox="true" />
+        <!--        1.5.1绑定企业-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="bindCompany1"
+        Parameters="bindApply.applyUserAccount,bindApply.companyCode"
+        Url="[WoURL]bindCompany.action"
+        ShowWaitBox="true" />
+        <!--        1.5.2展示反馈信息-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="getSuggestList"
+        Parameters="exchange.exchangeUserAccount,exchange.dataStatus"
+        Url="[WoURL]getSuggestList.action"
+        ShowWaitBox="true" />
+        <!--        1.5.3添加反馈信息-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="addSuggest"
+        Parameters="exchange.feedbackId,exchange.exchangeContent,exchange.exchangeUserAccount,exchange.parentMessageId,exchange.dataStatus,exchange.messageId"
+        Url="[WoURL]addSuggest.action"
+        ShowWaitBox="true" />
+        
+        <!--        1.5.4 获取版本更新内容列表-->
+        <ServiceMethod
+        ModelClass="YKVersionCheckSM"
+        IsExclusive="false"
+        Method="GET"
+        Name="getUpgradeList"
+        Parameters="upgrade.appPlatform,upgrade.appMainverNo"
+        Url="[WoURL]checkUpgrade2.action"
+        ShowWaitBox="true"
+        ShowError="false" />
+        
+        <!--        1.5.5 查看版本具体更新内容-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="viewUpgrade"
+        Parameters=""
+        Url="[WoURL]viewUpgrade.action"
+        ShowWaitBox="true" />
+        <!--        1.5.6 查看个人信息-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="viewUser"
+        Parameters="model.userId"
+        Url="[WoURL]viewUser.action"
+        ShowWaitBox="true" />
+        <!--        1.5.7 编辑个人资料-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="POST"
+        Name="editUser"
+        Parameters="/~"
+        Url="[WoURL]editUser.action"
+        ShowWaitBox="true" />
+        <!--        1.5.8 我的礼券-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="getGiftList"
+        Parameters="userAccount"
+        Url="[FaXianURL]queryGiftByUser.action"
+        ShowWaitBox="true" />
+        <!--        1.5.9 礼券明细消费-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="getGiftDtsList"
+        Parameters="userAccount"
+        Url="[LianXiURL]queryIntegralDtsByUserId.action"
+        ShowWaitBox="true" />
+        <!--        1.5.10 我的统计-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="showReportu"
+        Parameters="userAccount"
+        Url="[LianXiURL]myReport.action"
+        ShowWaitBox="true" />
+        <!--        1.5.11 生成电子名片-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="createHomepage"
+        Parameters="model.userId,model.loginAccount,model.userIntegral"
+        Url="[WoURL]createHomepage.action"
+        ShowWaitBox="true" />
+        
+        <!--        查看个人主页的信息-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="queryHomepage"
+        Parameters="userAccount"
+        Url="[LianXiURL]queryHomePage.action"
+        ShowWaitBox="true" />
+        
+        <!--        保存个人主页的信息-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="saveHomepage"
+        Parameters="userAccount,imgUrl,templateId,trafficDescriptor"
+        Url="[LianXiURL]saveHomePage.action"
+        ShowWaitBox="true" />
+        
+        <!--        1.5.12 分享个人主页-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="shareHomepage"
+        Parameters="model.userId,model.loginAccount,model.userIntegral"
+        Url="[WoURL]shareHomepage.action"
+        ShowWaitBox="true" />
+        
+        <!--        1.5.13 我的邀请-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="getInvitationList"
+        Parameters="invitation.userAccount,invitation.dataStatus,pageIndex"
+        Url="[WoURL]getInvitationList.action"
+        ShowWaitBox="true" />
+        
+        <!--        1.5.14 邀请好友-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="addInvitation"
+        Parameters="invitation.friendCellphone,invitation.inviteType,invitation.processStatus,invitation.inviteDeclaration,invitation.userAccount"
+        Url="[WoURL]addInvitation.action"
+        ShowWaitBox="true" />
+        
+        <!--        1.5.15 删除礼券消费明细-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="deleteIntegralDts"
+        Parameters="integralDts.integraldtsId"
+        Url="[WoURL]deleteIntegralDts.action"
+        ShowWaitBox="true" />
+        
+        <!--        1.5.16 版本更新-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="checkUpgrade"
+        Parameters=""
+        Url="[WoURL]checkUpgrade.action"
+        ShowWaitBox="true" />
+        
+        <!--        1.5.17 解除绑定-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="unbindCompany"
+        Parameters="portaluser.userId"
+        Url="[WoURL]unbindCompany.action"
+        ShowWaitBox="true" />
+        
+        <!--        行动列表-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="queryByStatus"
+        Parameters="actionOpreateUserAccount"
+        Url="[XingDongURL]queryAll.action"
+        ShowWaitBox="true" />
+        
+        <!--        行动列表-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="queryByStatus2"
+        Parameters="actionOpreateUserAccount,type,pageIndex,pageSize"
+        Url="[XingDongURL]queryAll.action"
+        ShowWaitBox="true" />
+        
+        <!--        1.5.19 邀请搜索-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="searchInvitation"
+        Parameters=""
+        Url="[WoURL]searchInvitation.action"
+        ShowWaitBox="true" />
+        <!--         行动搜索-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="searchAct.action"
+        Parameters="userAccount,actionPlanName"
+        Url="[WoURL]searchAct.action"
+        ShowWaitBox="true" />
+        
+        <!--        1.5.20 用户选择模板-->
+        <ServiceMethod
+        IsExclusive="false"
+        Method="GET"
+        Name="choiseTemplate"
+        Parameters="model.userId,model.loginAccount"
+        Url="[WoURL]choiseTemplate.action"
+        ShowWaitBox="true" />
+        
+        <!-- 获取个人主页所有模板 -->
+        <ServiceMethod
+        Method="GET"
+        IsExclusive="false"
+        Name="queryAllTemplete"
+        Parameters=""
+        Url="[LianXiURL]queryAllTemplate.action"
+        ShowWaitBox="false"/>
+        
+        <!-- 上传图片 -->
+        <ServiceMethod
+        Method="POST"
+        IsExclusive="false"
+        Name="Base64UploadServlet"
+        Parameters="/imgName,imgStr"
+        Url="[ShangChuanURL]fileupload/Base64UploadServlet"
+        ShowWaitBox="false"
+        Timeout="30" />
+        
+        <!-- 获取扫名片接口 -->
+        <ServiceMethod
+        Method="GET"
+        IsExclusive="false"
+        Name="analyticalBusinessCard"
+        Parameters=""
+        Url="[XingDongURL]analyticalBusinessCard.action"
+        ShowError="false" />
+        
+        <!-- 微信支付 -->
+        <ServiceMethod
+        Method="POST"
+        IsExclusive="false"
+        Name="WX_Pay.action"
+        Parameters="/~"
+        Url="[ZhiFuURL]pay.action"/>
+        
+        <!-- 创建标签 -->
+        <ServiceMethod
+        Method="GET"
+        IsExclusive="false"
+        Name="BQ_create.action"
+        Parameters="userId,name"
+        Url="[BiaoQianURL]create.action"/>
+        
+        <!-- 删除标签 -->
+        <ServiceMethod
+        Method="GET"
+        IsExclusive="false"
+        Name="BQ_delete.action"
+        Parameters="id"
+        Url="[BiaoQianURL]delete.action"/>
+        
+        <!-- 查询标签 -->
+        <ServiceMethod
+        Method="GET"
+        IsExclusive="false"
+        Name="BQ_getAllTagsByUserId.action"
+        Parameters="userId"
+        Url="[BiaoQianURL]getAllTagsByUserId.action"  />
+        
+        <!-- 排序标签 -->
+        <ServiceMethod
+        Method="GET"
+        IsExclusive="false"
+        Name="BQ_orderTagsByUserId.action"
+        Parameters="userId,id"
+        Url="[BiaoQianURL]orderTagsByUserId.action" />
+        
+        <!-- 排序标签 -->
+        <ServiceMethod
+        Method="GET"
+        IsExclusive="false"
+        Name="BQ_orderTagsByUserId.action"
+        Parameters="userId,id"
+        Url="[BiaoQianURL]orderTagsByUserId.action" />
+        
+        <!-- 积分明细 -->
+        <ServiceMethod
+        Method="GET"
+        IsExclusive="false"
+        Name="JF_getdetailsByUserId.action"
+        Parameters="userAccount"
+        Url="[JiFenURL]getdetailsByUserId.action" />
+        
+        <!-- 充值开关-->
+        <ServiceMethod
+        Method="GET"
+        IsExclusive="false"
+        Name="Wo_ChongZhiSwitch.action"
+        Parameters="appversion,platform"
+        Url="[ZhiFuURL]checkPaySwitch.action"
+        ShowError="false"/>
+        
+        <!-- 添加备注-->
+        <ServiceMethod
+        Method="GET"
+        IsExclusive="false"
+        Name="BeiZhu_create.action"
+        Parameters="userId,customerId,eventId,cellphone,type,tag,tagType,tDesc"
+        Url="[BeiZhuURL]create.action"
+        ShowError="true"/>
+        
+    </ServiceMethods>
+    
+</ServiceMetadata>
